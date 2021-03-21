@@ -5,7 +5,7 @@ const Schema = mongoose.Schema;
 const schema = new Schema({
     username: String,
     googleId: String,
-    email: String,
+    email: String, // set this to be unique 
     name: String,
     givenName: String,
     familyName: String,
