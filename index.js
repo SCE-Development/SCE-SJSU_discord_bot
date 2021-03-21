@@ -10,6 +10,6 @@ mongoose.connect(url, { useNewUrlParser: true })
 app.use(express.json()); // to parse request body 
 app.use('/verify', routes);
 
-app.listen(3000, () => {
-    console.log('listening on port 3000');
+app.listen(8080, () => {
+    console.log('listening on port 8080');
 })
