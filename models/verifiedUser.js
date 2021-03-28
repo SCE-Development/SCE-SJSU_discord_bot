@@ -3,13 +3,35 @@ const Schema = mongoose.Schema;
 
 // structure of an entry in collection / document 
 const schema = new Schema({
-    username: String,
-    googleId: String,
-    email: String, // set this to be unique 
-    name: String,
-    givenName: String,
-    familyName: String,
+    discordID: {
+        type: Object,
+        required: true
+    },
+    discordID: {
+        type: Object,
+        required: true
+    },
+    googleId: {
+        type: String,
+        required: true
+    },
+    email: {
+        type: String,
+        required: true
+    },
+    name: {
+        type: String,
+        required: true
+    },
+    givenName: {
+        type: String,
+        required: false
+    },
+    familyName: {
+        type: String,
+        required: false
+    }
 })
 
 // create the model 
-module.exports = mongoose.model('verifieduser', schema);
+module.exports = mongoose.model('verifiedUser', schema);
