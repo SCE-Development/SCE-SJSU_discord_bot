@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const verifiedUser = require('../models/verifiedUser');
+const verifiedUser = require('../models/VerifiedUser');
 const { OK, BAD_REQUEST, UNAUTHORIZED, NOT_FOUND } = require('../util/constants').STATUS_CODES
 
 
