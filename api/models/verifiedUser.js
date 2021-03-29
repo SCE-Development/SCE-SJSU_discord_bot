@@ -7,10 +7,6 @@ const schema = new Schema({
         type: Object,
         required: true
     },
-    discordID: {
-        type: Object,
-        required: true
-    },
     googleId: {
         type: String,
         required: true

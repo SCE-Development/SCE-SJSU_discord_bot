@@ -1,11 +1,11 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const url = 'mongodb://127.0.0.1:27017/sce-sjsu-discord'; // local database
-const routes = require('./routes');
+const routes = require('./api/routes/verifiedUser');
 
 const app = express();
 
-mongoose.connect(url, { useNewUrlParser: true })
+mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true })
 
 app.use(express.json()); // to parse request body 
 app.use('/verifiedUser', routes);
