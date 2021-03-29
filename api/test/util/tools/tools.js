@@ -1,4 +1,4 @@
-const { SceHttpServer } = require('../../../api/util/SceHttpServer');
+const { SceHttpServer } = require('../../../util/SceHttpServer');
 
 let serverInstance = null;
 

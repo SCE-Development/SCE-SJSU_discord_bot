@@ -3,7 +3,6 @@ const router = express.Router();
 const verifiedUser = require('../models/VerifiedUser');
 const { OK, BAD_REQUEST, UNAUTHORIZED, NOT_FOUND } = require('../util/constants').STATUS_CODES
 
-
 /**
  * GET REST API 
  * @param {null}  
@@ -39,7 +38,6 @@ router.post('/getUsers', (req, res) => {
     return res.status(OK).send(forms);
   });
 });
-
 
 /**
  * POST REST API 

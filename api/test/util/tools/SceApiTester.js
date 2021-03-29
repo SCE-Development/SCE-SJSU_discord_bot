@@ -8,8 +8,8 @@ chai.use(chaiHttp);
 /**
  * Handles any POST and GET request made during API testing.
  */
-class SceApiTester{
-  constructor(app){
+class SceApiTester {
+  constructor(app) {
     this.app = app;
   }
 
@@ -19,16 +19,16 @@ class SceApiTester{
    * @param {Object} params the parameters specified for the test.
    * @returns {Promise} the outcome of the API call.
    */
-  async sendPostRequest(endpoint, params){
+  async sendPostRequest(endpoint, params) {
     let response = null;
     await chai
       .request(this.app)
       .post(endpoint)
       .send(params)
-      .then(function(res) {
+      .then(function (res) {
         response = res;
       })
-      .catch(err =>{
+      .catch(err => {
         throw err;
       });
     return response;
@@ -41,16 +41,16 @@ class SceApiTester{
    * @param {Object} params the parameters specified for the test.
    * @returns {Promise} the outcome of the API call.
    */
-  async sendPostRequestWithToken(token, endpoint, params){
+  async sendPostRequestWithToken(token, endpoint, params) {
     let response = null;
     await chai
       .request(this.app)
       .post(endpoint)
       .send({ token, ...params })
-      .then(function(res) {
+      .then(function (res) {
         response = res;
       })
-      .catch(err =>{
+      .catch(err => {
         throw err;
       });
     return response;
@@ -61,15 +61,53 @@ class SceApiTester{
    * @param {String} endpoint contains the path of the route being tested.
    * @returns {Promise} the outcome of the API call.
    */
-  async sendGetRequest(endpoint){
+  async sendGetRequest(endpoint) {
     let response = null;
     await chai
       .request(this.app)
       .get(endpoint)
-      .then(function(res) {
+      .then(function (res) {
         response = res;
       })
-      .catch(err =>{
+      .catch(err => {
+        throw err;
+      });
+    return response;
+  }
+
+  /**
+   * Creates a chai DELETE request to test an API route.
+   * @param {String} endpoint contains the path of the route being tested.
+   * @returns {Promise} the outcome of the API call.
+   */
+  async sendDeleteRequest(endpoint) {
+    let response = null;
+    await chai
+      .request(this.app)
+      .delete(endpoint)
+      .then(function (res) {
+        response = res;
+      })
+      .catch(err => {
+        throw err;
+      });
+    return response;
+  }
+
+  /**
+   * Creates a chai PUT request to test an API route.
+   * @param {String} endpoint contains the path of the route being tested.
+   * @returns {Promise} the outcome of the API call.
+   */
+  async sendPutRequest(endpoint) {
+    let response = null;
+    await chai
+      .request(this.app)
+      .put(endpoint)
+      .then(function (res) {
+        response = res;
+      })
+      .catch(err => {
         throw err;
       });
     return response;
