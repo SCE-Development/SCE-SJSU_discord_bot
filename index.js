@@ -1,15 +1,14 @@
-const express = require('express');
-const mongoose = require('mongoose');
-const url = 'mongodb://127.0.0.1:27017/sce-sjsu-discord'; // local database
-const routes = require('./routes');
+const { SceHttpServer } = require('./api/util/SceHttpServer');
 
-const app = express();
+function main() {
+  const API_ENDPOINTS = [
+    __dirname + '/api/routes/'
+  ];
+  const mainEndpointServer = new SceHttpServer(API_ENDPOINTS, 8080);
+  mainEndpointServer.initializeEndpoints().then(() => {
+    mainEndpointServer.openConnection();
+  });
+}
 
-mongoose.connect(url, { useNewUrlParser: true })
-
-app.use(express.json()); // to parse request body 
-app.use('/verify', routes);
-
-app.listen(8080, () => {
-    console.log('listening on port 8080');
-})
+//start Express-Server
+main();
