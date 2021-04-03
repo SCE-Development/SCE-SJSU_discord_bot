@@ -3,6 +3,10 @@ const router = express.Router();
 const verifiedUser = require('../models/VerifiedUser');
 const { OK, BAD_REQUEST, UNAUTHORIZED, NOT_FOUND } = require('../util/constants').STATUS_CODES
 
+router.get('/test', (req, res) => {
+  res.send("Hello World");
+})
+
 /**
  * GET REST API 
  * @param {null}  
@@ -18,10 +22,11 @@ router.get('/getAllUsers', async (req, res) => {
 })
 
 /**
- * POST REST API 
+ * POST REST API <- GET? 
  * @param {String}param - query with `email`, `discordID`, or `googleId`
  * @returns response with all users of finding
  */
+
 router.post('/getUsers', (req, res) => {
   // Query Criteria; require
   let obj = {};
@@ -35,7 +40,7 @@ router.post('/getUsers', (req, res) => {
       return res.status(BAD_REQUEST).send(error);
     }
     if (forms.n < 1) return res.status(NOT_FOUND).send({ msg: `No such user(s)` });
-    return res.status(OK).send(forms);
+    return res.status(OK).send(forms); 
   });
 });
 

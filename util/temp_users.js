@@ -1,3 +1,7 @@
+/**
+ * temp-cache
+ */
+
 let temp_users = {
     3244: { //sample discord object 
         id: '435345346234234324',
@@ -119,9 +123,14 @@ setInterval(() => {
     clean_tempUser_TTL()
 }, 15 * 60 * 1000)//miliseconds
 
+function printTempCache() {
+    // todo 
+}
+
 module.exports = {
     add_tempUser, get_tempUser,
     edit_tempUser, delete_tempUser,
     find_tempUser, test_add_tempUser,
-    get_AlltempUser, clean_tempUser_TTL
+    get_AlltempUser, clean_tempUser_TTL,
+    printTempCache,
 }
