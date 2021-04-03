@@ -4,6 +4,12 @@ let temp_users = {
         username: 'SomeUserName With Space',
         discriminator: '4543',
         TTL: new Date()
+    },
+    4545: { //sample discord object 2
+        id: '342626282828292992',
+        username: 'SirArthur',
+        discriminator: '2263',
+        TTL: new Date()
     }
 }
 
