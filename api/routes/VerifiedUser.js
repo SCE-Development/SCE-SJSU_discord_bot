@@ -65,12 +65,12 @@ router.post('/addUser', async (req, res) => {
 })
 
 /**
- * DELETE REST API 
+ * POST REST API 
  * @param {String} email - of user
  * @param {String} discordID - of the same user
  * @returns {String} - msg
  */
-router.delete('/deleteUser', (req, res) => {
+router.post('/deleteUser', (req, res) => {
   //require
   const obj = { email: req.body.email, discordID: req.body.discordID }
   verifiedUser.deleteOne(
@@ -88,13 +88,13 @@ router.delete('/deleteUser', (req, res) => {
 });
 
 /**
- * PUT REST API 
+ * POST REST API 
  * @param {String} query_email - query user
  * @param {String} query_discordID - query user
  * @param {String} newForm - new info please follow model
  * @returns edited User
  */
-router.put('/editUser', (req, res) => {
+router.post('/editUser', (req, res) => {
   const query = { email: req.body.query_email, discordID: req.body.query_discordID };
   //Make sure req.body follow model
   const newForm = {
