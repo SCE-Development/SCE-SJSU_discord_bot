@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 // structure of an entry in collection / document 
 const schema = new Schema({
     discordID: {
-        type: Object,
+        type: String, 
         required: true
     },
     googleId: {

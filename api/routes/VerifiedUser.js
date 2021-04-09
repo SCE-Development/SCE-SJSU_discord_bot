@@ -4,10 +4,6 @@ const verifiedUser = require('../models/VerifiedUser');
 const { OK, BAD_REQUEST, UNAUTHORIZED, NOT_FOUND } = require('../util/constants').STATUS_CODES
 const {add_tempUser, delete_tempUser, get_tempUser, find_tempUser} = require('../../util/temp_users');
 
-router.get('/test', (req, res) => {
-  res.send("Hello World");
-})
-
 /**
  * GET REST API 
  * @param {null}  
@@ -23,7 +19,7 @@ router.get('/getAllUsers', async (req, res) => {
 })
 
 /**
- * POST REST API <- GET? 
+ * POST REST API 
  * @param {String}param - query with `email`, `discordID`, or `googleId`
  * @returns response with all users of finding
  */
@@ -40,7 +36,9 @@ router.post('/getUsers', (req, res) => {
     if (error) {
       return res.status(BAD_REQUEST).send(error);
     }
-    if (forms.n < 1) return res.status(NOT_FOUND).send({ msg: `No such user(s)` });
+    if (forms.length < 1) { 
+      return res.status(NOT_FOUND).send({ msg: `No such user(s)` });
+    }
     return res.status(OK).send(forms); 
   });
 });
@@ -52,20 +50,21 @@ router.post('/getUsers', (req, res) => {
  * @returns added User
  */
 router.post('/addUser', async (req, res) => {
-  //require
   const user = new verifiedUser({
     discordID: req.body.discordID,
-    googleId: req.body.profileObj.googleId,
-    email: req.body.profileObj.email,
-    name: req.body.profileObj.name,
-    givenName: req.body.profileObj.givenName,
-    familyName: req.body.profileObj.familyName
+    googleId: req.body.googleId,
+    email: req.body.email,
+    name: req.body.name,
+    givenName: req.body.givenName,
+    familyName: req.body.familyName
   });
 
   verifiedUser.create(user, (error, post) => {
     if (error) {
       return res.status(BAD_REQUEST).send(error);
     }
+    // remove TempUser 
+
     return res.status(OK).send(post);
   })
 })
