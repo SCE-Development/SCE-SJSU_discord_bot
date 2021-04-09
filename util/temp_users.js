@@ -123,14 +123,9 @@ setInterval(() => {
     clean_tempUser_TTL()
 }, 15 * 60 * 1000)//miliseconds
 
-function printTempCache() {
-    // todo 
-}
-
 module.exports = {
     add_tempUser, get_tempUser,
     edit_tempUser, delete_tempUser,
     find_tempUser, test_add_tempUser,
     get_AlltempUser, clean_tempUser_TTL,
-    printTempCache,
 }
