@@ -1,8 +1,6 @@
-const { create_slash_commands, delete_slash_commands } = require('../util/slash_discord')
-
-const commandData = {
-    name: "ping",
-    description: "ping pong!",
+module.exports = {
+    name: "sample_slash",
+    description: "It echos back to channel and dm",
     options: [
         {
             name: "paramName1",
@@ -36,10 +34,3 @@ const commandData = {
         }
     ]
 }
-
-create_slash_commands(commandData)
-
-/**
- * Need slash command's ID (concat to tring) to delete
- */
-//delete_slash_commands('id_in_string')
