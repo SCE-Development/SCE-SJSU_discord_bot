@@ -123,7 +123,7 @@ function clean_tempUser_TTL(sec = 30 * 60) {
 setInterval(() => {
     console.log(get_AlltempUser())
     clean_tempUser_TTL()
-}, 15 * 60 * 1000)//miliseconds
+}, 15 * 60 * 1000)//miliseconds 15 * 60 * 1000
 
 module.exports = {
     add_tempUser, get_tempUser,

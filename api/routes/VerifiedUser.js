@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const verifiedUser = require('../models/VerifiedUser');
 const { OK, BAD_REQUEST, UNAUTHORIZED, NOT_FOUND } = require('../util/constants').STATUS_CODES
-const {add_tempUser, delete_tempUser, get_tempUser} = require('../../util/temp_users');
+const {add_tempUser, delete_tempUser, get_tempUser, find_tempUser} = require('../../util/temp_users');
 
 /**
  * GET REST API 
@@ -72,20 +72,29 @@ router.post('/addUser', async (req, res) => {
  * @returns added User
  */
  router.post('/addUser_withGoogleToken', async (req, res) => {
+  const {verify} = require('../util/googleAuth');
   //require
-  const user = new verifiedUser({
-    discordID: req.body.discordID,
-    googleId: req.body.googleId,
-    email: req.body.email,
-    name: req.body.name,
-    givenName: req.body.givenName,
-    familyName: req.body.familyName
-  });
-  verifiedUser.create(user, (error, post) => {
-    if (error) {
-      return res.status(BAD_REQUEST).send(error);
-    }
-    return res.status(OK).send(post);
+  verify(req.body.googleTokenId).then(response => {
+    const user = new verifiedUser({
+      discordID: req.body.discordID,
+      googleId: response.userid,
+      email: response.payload.email,
+      name: response.payload.name,
+      givenName: response.payload.given_name,
+      familyName: response.payload.family_name
+    });
+    verifiedUser.create(user, (error, post) => {
+      if (error) {
+        return res.status(BAD_REQUEST).send(error);
+      }
+      if(find_tempUser(req.body.discordID)){
+        delete_tempUser(find_tempUser(req.body.discordID))
+        return res.status(OK).send(post);
+      }
+      return res.status(NOT_FOUND).send(post);
+    })
+  }).catch(err => {
+    return res.status(UNAUTHORIZED).send(err);
   })
 })
 
@@ -173,9 +182,9 @@ router.post('/editUser', (req, res) => {
   let id = req.body.id;
   let user = get_tempUser(id);
   if (user) {
-    res.status(OK).send(user);
+    return res.status(OK).send(user);
   } else {
-    res.status(BAD_REQUEST).send(error);
+    return res.status(NOT_FOUND).send('No temp user found');
   }
 });
 
