@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const verifiedUser = require('../models/VerifiedUser');
 const { OK, BAD_REQUEST, UNAUTHORIZED, NOT_FOUND } = require('../util/constants').STATUS_CODES
+const {add_tempUser, delete_tempUser, get_tempUser, find_tempUser} = require('../../util/temp_users');
 
 /**
  * GET REST API 
@@ -66,6 +67,39 @@ router.post('/addUser', async (req, res) => {
 
 /**
  * POST REST API 
+ * @param {String} discordID
+ * @param {String} profileObj - from google login
+ * @returns added User
+ */
+ router.post('/addUser_withGoogleToken', async (req, res) => {
+  const {verify} = require('../util/googleAuth');
+  //require
+  verify(req.body.googleTokenId).then(response => {
+    const user = new verifiedUser({
+      discordID: req.body.discordID,
+      googleId: response.userid,
+      email: response.payload.email,
+      name: response.payload.name,
+      givenName: response.payload.given_name,
+      familyName: response.payload.family_name
+    });
+    verifiedUser.create(user, (error, post) => {
+      if (error) {
+        return res.status(BAD_REQUEST).send(error);
+      }
+      if(find_tempUser(req.body.discordID)){
+        delete_tempUser(find_tempUser(req.body.discordID))
+        return res.status(OK).send(post);
+      }
+      return res.status(NOT_FOUND).send(post);
+    })
+  }).catch(err => {
+    return res.status(UNAUTHORIZED).send(err);
+  })
+})
+
+/**
+ * DELETE REST API 
  * @param {String} email - of user
  * @param {String} discordID - of the same user
  * @returns {String} - msg
@@ -112,5 +146,65 @@ router.post('/editUser', (req, res) => {
     return res.status(OK).send(result);
   });
 });
+
+/**
+ * POST REST API 
+ * @param {String} discordID - 4-digit ID
+ * @param {String} discordUsername - username
+ * @param {String} discriminator
+ * @param {Date} TTL
+ * @returns added User
+ */
+ router.post('/addTempUser', async (req, res) => {
+  //require
+  const user = {
+    discordID: req.body.id,
+    discordUsername: req.body.username,
+    discriminator: req.body.discriminator,
+    TTL: new Date()
+  };
+
+  let id = add_tempUser(user);
+  if(id) {
+    res.status(OK).send(id);
+  } else {
+    res.status(BAD_REQUEST).send(error);
+  }
+});
+
+/**
+ * POST REST API 
+ * @param {int} id - unique id in the cache
+ * @returns user || null, if not present
+ */
+ router.post('/getTempUser', (req, res) => {
+  //require
+  let id = req.body.id;
+  let user = get_tempUser(id);
+  if (user) {
+    return res.status(OK).send(user);
+  } else {
+    return res.status(NOT_FOUND).send('No temp user found');
+  }
+});
+
+/**
+ * POST REST API 
+ * @param {int} id - unique id in the cache
+ * @returns
+ */
+ router.post('/deleteTempUser', async (req, res) => {
+  //require
+  const id = req.body.id;
+
+  delete_tempUser(id);
+  let user = get_tempUser(id);
+  if (user){
+    res.status(BAD_REQUEST).send(error);
+  } else {
+    res.status(OK).send({msg: `${req.body.id} was deleted.`});
+  }
+})
+
 
 module.exports = router;
