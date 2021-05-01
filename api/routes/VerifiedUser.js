@@ -49,12 +49,12 @@ router.post('/getUsers', (req, res) => {
 router.post('/addUser', async (req, res) => {
   //require
   const user = new verifiedUser({
-    discordID: req.body.user.discordID,
-    googleId: req.body.user.profileObj.googleId,
-    email: req.body.user.profileObj.email,
-    name: req.body.user.profileObj.name,
-    givenName: req.body.user.profileObj.givenName,
-    familyName: req.body.user.profileObj.familyName
+    discordID: req.body.discordID,
+    googleId: req.body.profileObj.googleId,
+    email: req.body.profileObj.email,
+    name: req.body.profileObj.name,
+    givenName: req.body.profileObj.givenName,
+    familyName: req.body.profileObj.familyName
   });
 
   verifiedUser.create(user, (error, post) => {
