@@ -8,6 +8,7 @@ const TOKEN = process.env.DISCORD_BOT_TOKEN;
 Object.keys(on_message_commands).map(key => {
     bot.commands.set(on_message_commands[key].name, on_message_commands[key]); // set function accepts command's name & object
 })
+
 Object.keys(on_slash_command_executions).map(key => {
     bot.commands.set(on_slash_command_executions[key].name, on_slash_command_executions[key]); // set function accepts command's name & object
 })
@@ -17,7 +18,12 @@ bot.on('ready', () => {
     console.info(`Logged in as ${bot.user.tag}`);
 })
 
-//On slash commands
+/**
+ * slash commands: receiving the event
+ * interaction object is sent when user invokes a command 
+ * https://discord.com/developers/docs/interactions/slash-commands#interaction
+ */
+
 bot.ws.on('INTERACTION_CREATE', async interaction => {
     //command name
     const command = interaction.data.name.toLowerCase();
@@ -32,6 +38,7 @@ bot.ws.on('INTERACTION_CREATE', async interaction => {
         return user_obj
     });
     try {
+        console.log(bot.commands);
         bot.commands.get(command).execute(bot, interaction, command, args, user, guild);
     } catch (error) {
         console.error(error);
@@ -40,7 +47,7 @@ bot.ws.on('INTERACTION_CREATE', async interaction => {
     }
 })
 
-//On messgae
+//On message
 bot.on('message', msg => {
     const args = msg.content.split(/ +/); // split by whitespaces 
     const commands = args.shift().toLowerCase();

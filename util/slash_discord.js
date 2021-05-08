@@ -8,12 +8,16 @@ const axios_config = {
 }
 
 /**
- * look at document
+ * registers a command by sending a command object (?) 
  * https://discord.com/developers/docs/interactions/slash-commands
  * @param {Object} commandData 
  * @returns 
  */
 async function create_slash_commands(commandData, guild_id=null){
+    /**
+     * sample URL:
+     * "https://discord.com/api/v8/applications/<my_application_id>/guilds/<guild_id>/commands"
+     */
     const apiEndpoint = guild_id ? 
     `https://discord.com/api/v8/applications/${process.env.DISCORD_BOT_APP_ID}/guilds/${guild_id}/commands`
     : `https://discord.com/api/v8/applications/${process.env.DISCORD_BOT_APP_ID}/commands`

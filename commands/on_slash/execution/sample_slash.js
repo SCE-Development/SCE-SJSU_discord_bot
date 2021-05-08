@@ -1,6 +1,6 @@
 module.exports = {
     name: 'sample_slash',
-    description: 'It echos back to channel and dm',
+    description: 'It echos back to channel and dm -- test',
     execute(client, interaction, command, args, user, guild) {
         //DM user private
         user.send(

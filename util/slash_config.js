@@ -9,7 +9,7 @@ Object.keys(on_slash_commands_models).map(key => {
 
 if (args.includes('update')){
     Object.keys(on_slash_commands_models).map(async key => {
-        await create_slash_commands(on_slash_commands_models[key])
+        await create_slash_commands(on_slash_commands_models[key], '785700685144260659') // updated to be a guild command
         commands_len--
     })
 }

@@ -1,8 +1,8 @@
 module.exports = { // exporting an object 
-    name: 'ping', // commmand name 
+    name: '/verify', // commmand name 
     description: 'Ping!', 
     execute(msg, args) { // a function 
-        msg.reply('pong');
-        msg.channel.send('pong');
+        msg.reply('pong'); 
+        msg.channel.send('pong'); 
     }
 }
