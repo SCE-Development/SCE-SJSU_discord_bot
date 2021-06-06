@@ -91,8 +91,9 @@ router.post('/addUser', async (req, res) => {
       if (error) {
         return res.status(BAD_REQUEST).send(error);
       }
-      if(find_tempUser(req.body.discordID)){
-        delete_tempUser(find_tempUser(req.body.discordID))
+      let tempID = find_tempUser(req.body.discordID)
+      if(tempID){
+        delete_tempUser(tempID)
         return res.status(OK).send(post);
       }
       return res.status(NOT_FOUND).send(post);
