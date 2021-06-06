@@ -24,7 +24,7 @@ router.get('/getAllUsers', async (req, res) => {
  * @returns response with all users of finding
  */
 
-router.post('/getUsers', (req, res) => {
+router.post('/getUser', (req, res) => {
   // Query Criteria; require
   let obj = {};
   if (typeof req.body.email !== 'undefined') obj = { email: req.body.email };

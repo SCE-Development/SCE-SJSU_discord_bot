@@ -6,6 +6,7 @@
   "scripts": {
     "test": "mocha api/test/**/*.js",
     "bot": "node bot.js",
+    "server": "node server.js",
     "update-slash-commands": "node util/slash_config update",
     "delete-slash-commands": "node util/slash_config delete"
   },

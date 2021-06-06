@@ -84,7 +84,7 @@ function get_AlltempUser() {
  */
 function find_tempUser(discord_id) {
     for (let key in temp_users) {
-        if (parseInt(temp_users[key].id) == parseInt(discord_id)) return key
+        if (String(temp_users[key].id) == String(discord_id)) return key
     }
     return null
 }

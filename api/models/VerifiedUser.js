@@ -26,6 +26,11 @@ const schema = new Schema({
     familyName: {
         type: String,
         required: false
+    },
+    discordGuilds: {
+        type: [String],
+        default: [],
+        required: true
     }
 })
 
