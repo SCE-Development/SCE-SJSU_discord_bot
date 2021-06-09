@@ -11,4 +11,11 @@ const STATUS_CODES = {
     CONFLICT: 409
 };
 
-module.exports = {api_url,frontend_url,STATUS_CODES}
+const axios_header_config = {
+    headers: {
+        Authorization: 'Bot ' + process.env.DISCORD_BOT_TOKEN,
+        ContentType: 'application/json'
+    }      
+}
+
+module.exports = {api_url,frontend_url,STATUS_CODES, axios_header_config}

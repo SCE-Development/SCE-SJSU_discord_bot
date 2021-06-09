@@ -41,17 +41,18 @@ bot.ws.on('INTERACTION_CREATE', async interaction => {
 })
 
 //On messgae
-bot.on('message', msg => {
-    const args = msg.content.split(/ +/); // split by whitespaces 
-    const commands = args.shift().toLowerCase();
-    console.info(`Called commands: ${commands}`);
-    if (!bot.commands.has(commands)) { // checks if command exists 
-        return;  // command does not exist
-    }
-    try {
-        bot.commands.get(commands).execute(msg, args);
-    } catch (error) {
-        console.error(error);
-        msg.reply('an error occurred while trying to execute command');
-    }
-})
+//uncomment for messgae handler
+// bot.on('message', msg => {
+//     const args = msg.content.split(/ +/); // split by whitespaces 
+//     const commands = args.shift().toLowerCase();
+//     console.info(`Called commands: ${commands}`);
+//     if (!bot.commands.has(commands)) { // checks if command exists 
+//         return;  // command does not exist
+//     }
+//     try {
+//         bot.commands.get(commands).execute(msg, args);
+//     } catch (error) {
+//         console.error(error);
+//         msg.reply('an error occurred while trying to execute command');
+//     }
+// })
