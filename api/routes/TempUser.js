@@ -32,6 +32,14 @@ router.post('/add_tempUser', async (req, res) => {
   return res.status(NOT_FOUND).send(null);
 })
 
+router.get('/get_tempUser/:tempID', async (req, res) => {
+  let obj = get_tempUser(req.params.tempID)
+  if (obj) {
+    return res.status(OK).send({obj});
+  }
+  return res.status(NOT_FOUND).send(null);
+})
+
 
 
 
