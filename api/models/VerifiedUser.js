@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 // structure of an entry in collection / document 
 const schema = new Schema({
     discordID: {
-        type: Object,
+        type: String, 
         required: true
     },
     googleId: {
@@ -26,6 +26,11 @@ const schema = new Schema({
     familyName: {
         type: String,
         required: false
+    },
+    discordGuilds: {
+        type: [String],
+        default: [],
+        required: true
     }
 })
 

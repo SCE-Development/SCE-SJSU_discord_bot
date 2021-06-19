@@ -13,8 +13,10 @@ const axios_config = {
  * @param {Object} commandData 
  * @returns 
  */
-async function create_slash_commands(commandData){
-    const apiEndpoint = `https://discord.com/api/v8/applications/${process.env.DISCORD_BOT_APP_ID}/commands`
+async function create_slash_commands(commandData, guild_id=null){
+    const apiEndpoint = guild_id ? 
+    `https://discord.com/api/v8/applications/${process.env.DISCORD_BOT_APP_ID}/guilds/${guild_id}/commands`
+    : `https://discord.com/api/v8/applications/${process.env.DISCORD_BOT_APP_ID}/commands`
     let id = null
     await axios.post(apiEndpoint,commandData,axios_config)
     .then(res=>{
@@ -29,9 +31,10 @@ async function create_slash_commands(commandData){
  * Need to be string
  * @param {String} slash_command_id 
  */
-async function delete_slash_commands(slash_command_id){
-    const apiEndpoint = `https://discord.com/api/v8/applications/${process.env.DISCORD_BOT_APP_ID}/commands/${slash_command_id}`
-    console.log(slash_command_id)
+async function delete_slash_commands(slash_command_id, guild_id=null){
+    const apiEndpoint = guild_id ? 
+    `https://discord.com/api/v8/applications/${process.env.DISCORD_BOT_APP_ID}/guilds/${guild_id}/commands/${slash_command_id}`
+    : `https://discord.com/api/v8/applications/${process.env.DISCORD_BOT_APP_ID}/commands/${slash_command_id}`
     await axios.delete(apiEndpoint,axios_config)
     .then(res=>{
         console.log("Success Deleted ", slash_command_id)

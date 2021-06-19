@@ -5,7 +5,10 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha api/test/**/*.js",
-    "dev": "nodemon index.js"
+    "bot": "node bot.js",
+    "server": "node server.js",
+    "update-slash-commands": "node util/slash_config update",
+    "delete-slash-commands": "node util/slash_config delete"
   },
   "repository": {
     "type": "git",

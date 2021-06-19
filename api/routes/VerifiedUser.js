@@ -23,7 +23,8 @@ router.get('/getAllUsers', async (req, res) => {
  * @param {String}param - query with `email`, `discordID`, or `googleId`
  * @returns response with all users of finding
  */
-router.post('/getUsers', (req, res) => {
+
+router.post('/getUser', (req, res) => {
   // Query Criteria; require
   let obj = {};
   if (typeof req.body.email !== 'undefined') obj = { email: req.body.email };
@@ -35,8 +36,10 @@ router.post('/getUsers', (req, res) => {
     if (error) {
       return res.status(BAD_REQUEST).send(error);
     }
-    if (forms.n < 1) return res.status(NOT_FOUND).send({ msg: `No such user(s)` });
-    return res.status(OK).send(forms);
+    if (forms.length < 1) { 
+      return res.status(NOT_FOUND).send({ msg: `No such user(s)` });
+    }
+    return res.status(OK).send(forms); 
   });
 });
 
@@ -47,20 +50,21 @@ router.post('/getUsers', (req, res) => {
  * @returns added User
  */
 router.post('/addUser', async (req, res) => {
-  //require
   const user = new verifiedUser({
     discordID: req.body.discordID,
-    googleId: req.body.profileObj.googleId,
-    email: req.body.profileObj.email,
-    name: req.body.profileObj.name,
-    givenName: req.body.profileObj.givenName,
-    familyName: req.body.profileObj.familyName
+    googleId: req.body.googleId,
+    email: req.body.email,
+    name: req.body.name,
+    givenName: req.body.givenName,
+    familyName: req.body.familyName
   });
 
   verifiedUser.create(user, (error, post) => {
     if (error) {
       return res.status(BAD_REQUEST).send(error);
     }
+    // remove TempUser 
+
     return res.status(OK).send(post);
   })
 })
@@ -87,8 +91,9 @@ router.post('/addUser', async (req, res) => {
       if (error) {
         return res.status(BAD_REQUEST).send(error);
       }
-      if(find_tempUser(req.body.discordID)){
-        delete_tempUser(find_tempUser(req.body.discordID))
+      let tempID = find_tempUser(req.body.discordID)
+      if(tempID){
+        delete_tempUser(tempID)
         return res.status(OK).send(post);
       }
       return res.status(NOT_FOUND).send(post);
@@ -129,82 +134,25 @@ router.post('/deleteUser', (req, res) => {
  * @returns edited User
  */
 router.post('/editUser', (req, res) => {
+  if (!req.body.query_email || !req.body.query_discordID || !req.body.newForm){
+    return res.status(BAD_REQUEST).send({msg:"Need query_email, query_discordID and newForm"});
+  }
   const query = { email: req.body.query_email, discordID: req.body.query_discordID };
   //Make sure req.body follow model
   const newForm = {
-    ...req.body.newForm
+    ...req.body.newForm,
+    ...query
   };
-  verifiedUser.updateOne(query, newForm, { new: true }, (error, result) => {
-    if (error) {
-      return res.sendStatus(BAD_REQUEST);
+  verifiedUser.findOneAndUpdate(query,newForm, (error, form)=>{
+    if (error) return res.status(BAD_REQUEST).send(error);
+    else if (form) {
+      let tempID = find_tempUser(query.discordID)
+      if(tempID) delete_tempUser(tempID)
+      return res.status(OK).send(form);
     }
-    if (result.nModified < 1) {
-      return res
-        .status(NOT_FOUND)
-        .send({ msg: `${req.body.email} & ${req.body.discordID} not found.` });
-    }
-    return res.status(OK).send(result);
-  });
+    else return res.status(NOT_FOUND).send({msg: `not found ${query.email} and ${query.discordID}`});
+  })
 });
-
-/**
- * POST REST API 
- * @param {String} discordID - 4-digit ID
- * @param {String} discordUsername - username
- * @param {String} discriminator
- * @param {Date} TTL
- * @returns added User
- */
- router.post('/addTempUser', async (req, res) => {
-  //require
-  const user = {
-    discordID: req.body.id,
-    discordUsername: req.body.username,
-    discriminator: req.body.discriminator,
-    TTL: new Date()
-  };
-
-  let id = add_tempUser(user);
-  if(id) {
-    res.status(OK).send(id);
-  } else {
-    res.status(BAD_REQUEST).send(error);
-  }
-});
-
-/**
- * POST REST API 
- * @param {int} id - unique id in the cache
- * @returns user || null, if not present
- */
- router.post('/getTempUser', (req, res) => {
-  //require
-  let id = req.body.id;
-  let user = get_tempUser(id);
-  if (user) {
-    return res.status(OK).send(user);
-  } else {
-    return res.status(NOT_FOUND).send('No temp user found');
-  }
-});
-
-/**
- * POST REST API 
- * @param {int} id - unique id in the cache
- * @returns
- */
- router.post('/deleteTempUser', async (req, res) => {
-  //require
-  const id = req.body.id;
-
-  delete_tempUser(id);
-  let user = get_tempUser(id);
-  if (user){
-    res.status(BAD_REQUEST).send(error);
-  } else {
-    res.status(OK).send({msg: `${req.body.id} was deleted.`});
-  }
-})
 
 
 module.exports = router;

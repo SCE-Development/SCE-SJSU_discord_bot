@@ -1,12 +1,16 @@
+/**
+ * temp-cache
+ */
+
 let temp_users = {
     3244: { //sample discord object 
-        id: '435345346234234324',
+        id: '564456345',
         username: 'SomeUserName With Space',
         discriminator: '4543',
         TTL: new Date()
     },
     4545: { //sample discord object 2
-        id: '342626282828292992',
+        id: '435345455',
         username: 'SirArthur',
         discriminator: '2263',
         TTL: new Date()
@@ -80,7 +84,7 @@ function get_AlltempUser() {
  */
 function find_tempUser(discord_id) {
     for (let key in temp_users) {
-        if (parseInt(temp_users[key].id) == parseInt(discord_id)) return key
+        if (String(temp_users[key].id) == String(discord_id)) return key
     }
     return null
 }
@@ -129,5 +133,5 @@ module.exports = {
     add_tempUser, get_tempUser,
     edit_tempUser, delete_tempUser,
     find_tempUser, test_add_tempUser,
-    get_AlltempUser, clean_tempUser_TTL
+    get_AlltempUser, clean_tempUser_TTL,
 }
