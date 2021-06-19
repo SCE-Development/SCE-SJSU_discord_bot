@@ -12,7 +12,8 @@ const on_message_commands = {
  */
 const on_slash_command_executions = {
     //sample: require('./on_slash/execution/sample_slash')
-    verify: require('./on_slash/execution/verify')
+    verify: require('./on_slash/execution/verify'),
+    remove: require('./on_slash/execution/remove')
 }
 
 /**
@@ -21,7 +22,8 @@ const on_slash_command_executions = {
  */
  const on_slash_commands_models = {
     //sample: require('./on_slash/model/sample_slash')
-    verify: require('./on_slash/model/verify')
+    verify: require('./on_slash/model/verify'),
+    remove: require('./on_slash/model/remove')
 }
 
 module.exports = {

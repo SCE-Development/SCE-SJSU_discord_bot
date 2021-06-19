@@ -1,8 +1,13 @@
 const { OK, BAD_REQUEST, UNAUTHORIZED, NOT_FOUND, FORBIDDEN } = require('../../../config').STATUS_CODES
 const { ApiResponse } = require("../../../util/api_response")
-const { api_url, frontend_url, axios_header_config } = require("../../../config")
+const { api_url, frontend_url, axios_header_config, discord_api_url } = require("../../../config")
 const axios = require("axios")
 
+/**
+ * get user from database
+ * @param {String} discordID 
+ * @returns status obj
+ */
 async function get_database_user(discordID) {
     let status = new ApiResponse();
     await axios.post(`${api_url}/api/verifiedUser/getUser`, { discordID })
@@ -17,6 +22,11 @@ async function get_database_user(discordID) {
     return status;
 }
 
+/**
+ * get tempuser obj
+ * @param {String} discordID 
+ * @returns status obj
+ */
 async function get_temp_user(discordID) {
     let status = new ApiResponse();
     await axios.get(`${api_url}/api/TempUser/find_tempUser/${discordID}`)
@@ -31,6 +41,11 @@ async function get_temp_user(discordID) {
     return status;
 }
 
+/**
+ * Add to tempUser in backend
+ * @param {obj} obj - check backend api
+ * @returns status obj
+ */
 async function add_to_tempUser(obj) {
     let status = new ApiResponse();
     await axios.post(`${api_url}/api/TempUser/add_tempUser`, obj)
@@ -45,6 +60,11 @@ async function add_to_tempUser(obj) {
     return status;
 }
 
+/**
+ * edit an user obj
+ * @param {obj} obj - check backend api
+ * @returns status obj
+ */
 async function edit_database_user(obj) {
     let status = new ApiResponse();
     await axios.post(`${api_url}/api/verifiedUser/editUser`, obj)
@@ -59,9 +79,16 @@ async function edit_database_user(obj) {
     return status;
 }
 
+/**
+ * add role to user
+ * @param {String} guildID 
+ * @param {String} userID - discord
+ * @param {String} roleID 
+ * @returns status obj
+ */
 async function discord_add_role(guildID, userID, roleID) {
     let status = new ApiResponse();
-    await axios.put(`https://discord.com/api/guilds/${guildID}/members/${userID}/roles/${roleID}`, {}, axios_header_config)
+    await axios.put(`${discord_api_url}/guilds/${guildID}/members/${userID}/roles/${roleID}`, {}, axios_header_config)
         .then(result => {
             status.data = result.data;
         })
@@ -121,7 +148,7 @@ module.exports = {
                 }
             }
 
-            const role = guild.roles.cache.find(role => role.name === "Verified")
+            const role = guild.roles.cache.find(role => role.name.toLowerCase() === "verified")
             if (!role) {
                 client.api.interactions(interaction.id, interaction.token).callback.post({
                     data: {
