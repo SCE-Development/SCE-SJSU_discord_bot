@@ -1,6 +1,7 @@
 module.exports = {
     name: "remove",
     description: "Remove a verified account with discord-ID or SJSU-email",
+    permissions: ["ADMINISTRATOR"],
     options: [
         {
             name: "discord-id",

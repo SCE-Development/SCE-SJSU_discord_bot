@@ -3,6 +3,7 @@ const { ApiResponse } = require("../../../util/api_response")
 const { isAllowed } = require("../../../util/discord_permissions")
 const { api_url, discord_api_url, axios_header_config } = require("../../../config")
 const axios = require("axios")
+const perms = require("../model/remove").permissions
 
 /**
  * 
@@ -91,7 +92,7 @@ module.exports = {
     async execute(client, interaction, command, args, user, guild) {
 
         //permission check
-        const isAdmin = await isAllowed(interaction.member.permissions, ['ADMINISTRATOR'] , client, interaction)
+        const isAdmin = await isAllowed(interaction.member.permissions, perms, client, interaction)
         if (!isAdmin) return;
 
         const id_obj = {

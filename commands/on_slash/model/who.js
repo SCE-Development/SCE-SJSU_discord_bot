@@ -1,6 +1,7 @@
 module.exports = {
     name: "who",
     description: "Check who is a verified user",
+    permissions: ["ADMINISTRATOR"],
     options: [
         {
             name: "discord-id",
