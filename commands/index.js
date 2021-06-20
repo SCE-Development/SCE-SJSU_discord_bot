@@ -4,7 +4,6 @@
 //message trigger
 const on_message_commands = {
     ping: require('./on_message/ping'),
-    verify: require('./on_message/verify')
 }
 /**
  * Slash command export
@@ -15,7 +14,8 @@ const on_slash_command_executions = {
     verify: require('./on_slash/execution/verify'),
     remove: require('./on_slash/execution/remove'),
     who: require('./on_slash/execution/who'),
-    help: require('./on_slash/execution/help')
+    help: require('./on_slash/execution/help'),
+    status: require('./on_slash/execution/status')
 }
 
 /**
@@ -27,7 +27,8 @@ const on_slash_command_executions = {
     verify: require('./on_slash/model/verify'),
     remove: require('./on_slash/model/remove'),
     who: require('./on_slash/model/who'),
-    help: require('./on_slash/model/help')
+    help: require('./on_slash/model/help'),
+    status: require('./on_slash/model/status')
 }
 
 module.exports = {

@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const verifiedUser = require('../models/VerifiedUser');
 const { OK, BAD_REQUEST, UNAUTHORIZED, NOT_FOUND } = require('../util/constants').STATUS_CODES
-const {add_tempUser, delete_tempUser, get_tempUser, find_tempUser} = require('../../util/temp_users');
+const {add_tempUser, delete_tempUser, get_tempUser, find_tempUser} = require('../util/temp_users');
 
 /**
  * GET REST API 

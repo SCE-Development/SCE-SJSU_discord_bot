@@ -1,8 +1,8 @@
-let api_url = "http://localhost:8080"
+let api_url = process.env.API_URL || "http://localhost:8080"
 
-let frontend_url = "http://localhost:3000"
+let frontend_url = process.env.FRONTEND_URL || "http://localhost:3000"
 
-let discord_api_url = "https://discord.com/api"
+let discord_api_url = process.env.DISCORD_API_URL || "https://discord.com/api"
 
 const STATUS_CODES = {
     OK: 200,

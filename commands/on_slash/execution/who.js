@@ -1,7 +1,6 @@
-const { OK, BAD_REQUEST, UNAUTHORIZED, NOT_FOUND, FORBIDDEN } = require('../../../config').STATUS_CODES
 const { ApiResponse } = require("../../../util/api_response")
 const { isAllowed } = require("../../../util/discord_permissions")
-const { api_url, discord_api_url, axios_header_config } = require("../../../config")
+const { api_url } = require("../../../config")
 const axios = require("axios")
 const perms = require("../model/who").permissions
 

@@ -1,9 +1,8 @@
-const { permissions } = require('../model/remove')
-
 const commands = [
   require('../model/verify'),
   require('../model/remove'),
-  require('../model/who')
+  require('../model/who'),
+  require('../model/status')
 ]
 
 module.exports = {

@@ -1,5 +1,5 @@
 const { SceHttpServer } = require('./api/util/SceHttpServer');
-require('./util/temp_users')
+require('./api/util/temp_users')
 
 function main() {
   const API_ENDPOINTS = [
