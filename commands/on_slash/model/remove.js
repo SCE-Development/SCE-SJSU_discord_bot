@@ -15,5 +15,10 @@ module.exports = {
             type: 3, //String
             required: false
         }
+    ],
+    examples: [
+        "/remove discord-id:@SomeUserName",
+        "/remove discord-id:3423432543534",
+        "/remove sjsu-email:email@sjsu.edu"
     ]    
 }

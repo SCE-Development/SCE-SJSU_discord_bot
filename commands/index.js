@@ -14,7 +14,8 @@ const on_slash_command_executions = {
     //sample: require('./on_slash/execution/sample_slash')
     verify: require('./on_slash/execution/verify'),
     remove: require('./on_slash/execution/remove'),
-    who: require('./on_slash/execution/who')
+    who: require('./on_slash/execution/who'),
+    help: require('./on_slash/execution/help')
 }
 
 /**
@@ -25,7 +26,8 @@ const on_slash_command_executions = {
     //sample: require('./on_slash/model/sample_slash')
     verify: require('./on_slash/model/verify'),
     remove: require('./on_slash/model/remove'),
-    who: require('./on_slash/model/who')
+    who: require('./on_slash/model/who'),
+    help: require('./on_slash/model/help')
 }
 
 module.exports = {

@@ -15,5 +15,10 @@ module.exports = {
             type: 3, //String
             required: false
         }
+    ],
+    examples: [
+        "/who discord-id:@SomeUserName",
+        "/who discord-id:3423432543534",
+        "/who sjsu-email:email@sjsu.edu"
     ]    
 }
