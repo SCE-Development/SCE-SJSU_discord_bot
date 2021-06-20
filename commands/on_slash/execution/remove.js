@@ -1,5 +1,6 @@
 const { OK, BAD_REQUEST, UNAUTHORIZED, NOT_FOUND, FORBIDDEN } = require('../../../config').STATUS_CODES
 const { ApiResponse } = require("../../../util/api_response")
+const { isAllowed } = require("../../../util/discord_permissions")
 const { api_url, discord_api_url, axios_header_config } = require("../../../config")
 const axios = require("axios")
 
@@ -88,6 +89,10 @@ module.exports = {
     name: "remove",
     description: "Remove a verified account",
     async execute(client, interaction, command, args, user, guild) {
+
+        //permission check
+        const isAdmin = await isAllowed(interaction.member.permissions, ['ADMINISTRATOR'] , client, interaction)
+        if (!isAdmin) return;
 
         const id_obj = {
             type: null,
