@@ -24,4 +24,4 @@ else if (args.includes('delete')){
 
 setTimeout(()=>{
     if (commands_len == 0) process.exit()
-},commands_len*2000);
+},process.env.DOCKER ? 25000 : commands_len*2000);
