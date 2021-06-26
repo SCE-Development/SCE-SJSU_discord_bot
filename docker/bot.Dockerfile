@@ -2,7 +2,7 @@ FROM node:alpine
 
 WORKDIR /app
 
-ENV NODE_ENV production
+ENV API_URL server
 
 COPY ./package.json ./
 
