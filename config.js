@@ -1,4 +1,4 @@
-let api_url = `http://${process.env.API_URL || localhost}:8080`
+let api_url = `http://${process.env.API_URL || "localhost"}:8080`
 
 let frontend_url = process.env.FRONTEND_URL || "http://localhost:3000"
 
