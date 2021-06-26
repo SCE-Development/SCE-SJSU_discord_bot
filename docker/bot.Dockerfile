@@ -24,4 +24,8 @@ ENV DOCKER true
 
 ENV NODE_ENV production
 
+RUN node util/slash_config.js delete
+
+RUN node util/slash_config.js update
+
 CMD [ "node", "./bot.js" ]

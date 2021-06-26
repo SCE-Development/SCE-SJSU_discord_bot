@@ -20,8 +20,4 @@ ENV DOCKER true
 
 ENV NODE_ENV production
 
-CMD [ "node", "run", "remove-slash-commands" ]
-
-CMD [ "node", "run", "update-slash-commands" ]
-
 CMD [ "node", "./server.js" ]
