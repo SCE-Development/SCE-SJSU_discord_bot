@@ -15,8 +15,6 @@ services:
     build:
       context: .
       dockerfile: ./docker/server.Dockerfile
-    ports:
-      - '8080:8080'
     restart: 'on-failure'
     stdin_open: true
     links:
@@ -47,6 +45,7 @@ services:
     ports:
       - '80:80'
       - '443:443'
+      - '8080:8080'
     restart: 'on-failure'
     depends_on:
       - server
