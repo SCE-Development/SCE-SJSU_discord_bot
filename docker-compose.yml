@@ -1,0 +1,38 @@
+version: '3'
+services:
+  db:
+    restart: always
+    image: 'mongo'
+    ports:
+      - '27017:27017'
+    volumes:
+      - '/data/db:/data/db' 
+    command: 'mongod'
+    
+  server:
+    container_name: server
+    image: server:latest
+    build:
+      context: .
+      dockerfile: ./docker/server.Dockerfile
+    ports:
+      - '8080:8080'
+    restart: 'on-failure'
+    stdin_open: true
+    links:
+      - db
+    depends_on:
+      - db
+
+  bot:
+    container_name: bot
+    image: bot:latest
+    build:
+      context: .
+      dockerfile: ./docker/bot.Dockerfile
+    restart: 'on-failure'
+    stdin_open: true
+    links:
+      - server
+    depends_on:
+      - server
