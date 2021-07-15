@@ -56,3 +56,5 @@ bot.ws.on('INTERACTION_CREATE', async interaction => {
 //         msg.reply('an error occurred while trying to execute command');
 //     }
 // })
+
+require('./util/bot_periodic')
